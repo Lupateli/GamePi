@@ -35,7 +35,7 @@
   },
   "name":"GamePi",
   "resources":[
-    {"id":{"name":"Font1","path":"fonts/Font1/Font1.yy",},},
+    {"id":{"name":"fnt_jogo","path":"fonts/fnt_jogo/fnt_jogo.yy",},},
     {"id":{"name":"obj_botao_pulo","path":"objects/obj_botao_pulo/obj_botao_pulo.yy",},},
     {"id":{"name":"obj_botao_resposta","path":"objects/obj_botao_resposta/obj_botao_resposta.yy",},},
     {"id":{"name":"obj_controlador","path":"objects/obj_controlador/obj_controlador.yy",},},

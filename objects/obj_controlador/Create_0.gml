@@ -1,6 +1,6 @@
 randomize();
 
-// 1. Banco de Dados de Perguntas (Adicionei mais para você)
+// 1. Banco de Dados
 perguntas_base = [
     { enunciado: "Qual comando exibe algo na tela em Python?", opcoes: ["print()", "echo", "cout", "system"], correta: 0 },
     { enunciado: "O que significa HTML?", opcoes: ["Hyperlinks", "HyperText Markup Language", "Home Tool", "Hyperlinks Text"], correta: 1 },
@@ -14,30 +14,22 @@ perguntas_base = [
     { enunciado: "O que o comando 'ls' faz no terminal Linux?", opcoes: ["Deleta", "Cria pasta", "Lista arquivos", "Move arquivos"], correta: 2 }
 ];
 
-// 2. Cálculo de Vida 70%
+// 1. Definições de Dano
 dano_padrao = 10;
 total_perguntas = array_length(perguntas_base);
 
-// Se ele errar mais de 30%, ele perde. 
-// A vida do vilão será o equivalente a acertar 70% das perguntas.
-vida_maxima_mau = total_perguntas * dano_padrao; 
-vida_mau = vida_maxima_mau;
+// 2. Definir a VIDA INICIAL e a VIDA MÁXIMA de cada um
+// O vilão começa com 70% da vida total do baralho
+vida_mau = (total_perguntas * 0.7) * dano_padrao; 
+vida_maxima_mau = vida_mau; // Esta é a referência para a barra dele
 
-// A vida do jogador será menor: se ele errar o equivalente a 30% das perguntas, ele morre.
-vida_maxima_bom = (total_perguntas * 0.3) * dano_padrao; 
-vida_bom = vida_maxima_bom;
+// O herói começa com 30% da vida total do baralho
+vida_bom = (total_perguntas * 0.3) * dano_padrao;
+vida_maxima_bom = vida_bom; // Esta é a referência para a barra dele
 
 energia_bom = 0;
 
-// 2. Status do Jogo
-dano_padrao = 10;
-vida_maxima = array_length(perguntas_base) * dano_padrao;
-
-vida_bom = vida_maxima;
-vida_mau = vida_maxima;
-energia_bom = 0;
-
-// 3. Sistema de Fila (Baralho)
+// 3. Sistema de Fila
 lista_ativa = ds_list_create();
 
 function recarregar_perguntas() {
