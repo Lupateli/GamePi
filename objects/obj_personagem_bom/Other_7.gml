@@ -1,0 +1,18 @@
+// Este evento roda automaticamente quando uma animação chega ao fim
+if (estado == "morte") {
+    // 1. Para a velocidade de animação completamente
+    image_speed = 0;
+    
+    // 2. Trava o personagem no ÚLTIMO FRAME (que é o índice 3 para 4 frames)
+    image_index = 3;
+    
+    // 3. (Opcional) Você pode mudar a alpha para dar um efeito de fade out
+    // image_alpha -= 0.01; // Coloque isso no Step, se quiser fade
+}
+// Evento Other > Animation End
+if (variable_instance_exists(id, "estado")) {
+    if (estado == "morte") {
+        image_speed = 0;
+        image_index = image_number - 1; // Vai para o último frame automaticamente
+    }
+}
