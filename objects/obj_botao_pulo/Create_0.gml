@@ -1,1 +1,1 @@
-visible = false; // Começa escondido
+visible = true; // Começa escondido

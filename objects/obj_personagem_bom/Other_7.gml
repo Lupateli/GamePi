@@ -10,9 +10,9 @@ if (estado == "morte") {
     // image_alpha -= 0.01; // Coloque isso no Step, se quiser fade
 }
 // Evento Other > Animation End
-if (variable_instance_exists(id, "estado")) {
-    if (estado == "morte") {
-        image_speed = 0;
-        image_index = image_number - 1; // Vai para o último frame automaticamente
-    }
+if (estado == "ultimate") {
+    sprite_index = spr_samuraiparado; // Volta para a animação parado
+	estado = "idle";
+    image_index = 0;
+	image_speed = 0;
 }
