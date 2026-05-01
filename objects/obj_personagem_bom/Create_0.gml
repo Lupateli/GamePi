@@ -4,3 +4,5 @@ image_speed = 0.7; // Velocidade normal da animação
 tremor = 0;
 x_original = x;
 posicao_inicial_x = x;
+pode_pular = false; // Começa desligado
+pode_curar = false;
