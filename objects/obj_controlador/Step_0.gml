@@ -1,6 +1,12 @@
 // Garante que a energia não passe de 100
 energia_bom = clamp(energia_bom, 0, 100);
 
+// Verifica se o herói morreu
+if (vida_bom <= 0) {
+    show_message("Game Over! O samurai foi derrotado.");
+    game_restart(); // Reinicia o jogo
+}
+
 // Lógica de Ativação do Pulo
 if (instance_exists(obj_personagem_bom)) {
     // Se a energia estiver em 100%, libera o pulo no samurai
