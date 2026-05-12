@@ -2,7 +2,7 @@
 
 switch(estado) {
     case "idle": 
-        sprite_index = spr_samuraiparado;
+        sprite_index = spr_id;
         image_speed = 1;
         // Sistema de volta suave que você já tem
         if (x_original > posicao_inicial_x) {
@@ -12,7 +12,7 @@ switch(estado) {
         break;
 
     case "avanco":
-        sprite_index = spr_samuraiAtaque; 
+        sprite_index = spr_atq; 
         image_index = 0; // Trava no primeiro frame (preparação)
         image_speed = 0;
         
