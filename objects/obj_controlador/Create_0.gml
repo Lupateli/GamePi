@@ -1,47 +1,67 @@
-randomize();
+// --- EVENTO CREATE (CRIAR) DO obj_controlador ---
 
-// 1. Banco de Dados
-
-var url = "http://localhost:3000/api/perguntas";
-requisicao_perguntas = http_get(url);
-
-//perguntas_base = [
-//    { enunciado: "Qual comando exibe algo na tela em Python?", opcoes: ["print()", "echo", "cout", "system"], correta: 0 },
-//    { enunciado: "O que significa HTML?", opcoes: ["Hyperlinks", "HyperText Markup Language", "Home Tool", "Hyperlinks Text"], correta: 1 },
-//    { enunciado: "Qual símbolo inicia um ID no CSS?", opcoes: [".", "@", "#", "$"], correta: 2 },
-//    { enunciado: "Em JavaScript, qual palavra declara uma variável constante?", opcoes: ["var", "let", "const", "static"], correta: 2 },
-//    { enunciado: "Qual tag HTML é usada para criar um link?", opcoes: ["<link>", "<a>", "<href>", "<url>"], correta: 1 },
-//    { enunciado: "Qual destes é um banco de dados Relacional?", opcoes: ["MongoDB", "MySQL", "Redis", "JSON"], correta: 1 },
-//    { enunciado: "Como se comenta uma linha em C# ou Java?", opcoes: ["#", "--", "//", "/*"], correta: 2 },
-//    { enunciado: "Qual tag define o título da aba do navegador?", opcoes: ["<head>", "<title>", "<meta>", "<header>"], correta: 1 },
-//    { enunciado: "O que o comando 'ls' faz no terminal Linux?", opcoes: ["Deleta", "Cria pasta", "Lista arquivos", "Move arquivos"], correta: 2 }
-//];
-
-// 1. Definições de Dano
-dano_padrao = 10;
-total_perguntas = array_length(perguntas_base);
-
-// 2. Definir a VIDA INICIAL e a VIDA MÁXIMA de cada um
-// O vilão começa com 70% da vida total do baralho
-vida_mau = (total_perguntas * 0.7) * dano_padrao; 
-vida_maxima_mau = vida_mau; // Esta é a referência para a barra dele
-
-// O herói começa com 30% da vida total do baralho
-vida_bom = (total_perguntas * 0.3) * dano_padrao;
-vida_maxima_bom = vida_bom; // Esta é a referência para a barra dele
-
-energia_bom = 0;
-
-// 3. Sistema de Fila
+// Inicializa a lista de perguntas
 lista_ativa = ds_list_create();
+pergunta_atual_dados = undefined;
 
-function recarregar_perguntas() {
-    ds_list_clear(lista_ativa);
-    for (var i = 0; i < array_length(perguntas_base); i++) {
-        ds_list_add(lista_ativa, perguntas_base[i]);
+// Executa a função da Extensão que criamos no Bloco de Notas
+var json_str = obter_dados_fase_js();
+
+if (json_str != "") {
+    // Transforma a string JSON em uma Struct do GameMaker
+    var dados = json_parse(json_str);
+    
+    // Guarda as informações globais que o seu site enviou
+    global.fase_id = dados.faseId;
+    global.titulo_fase = dados.titulo;
+    
+    // --- [APLICAÇÃO DE SKIN] ---
+    var skin = dados.personagem_selecionado; 
+    if (instance_exists(obj_personagem_bom)) {
+        with(obj_personagem_bom) {
+            if (skin == "cavaleiro") {
+                spr_id = spr_cavaleiro_parado;
+                spr_atq = spr_cavaleiro_atack;
+                spr_ult = spr_cavaleiro_especial;
+            } else {
+                spr_id = spr_samuraiparado;
+                spr_atq = spr_samuraiAtaque;
+                spr_ult = spr_samuraiUlt;
+            }
+        }
     }
-    ds_list_shuffle(lista_ativa);
-}
 
-recarregar_perguntas();
-pergunta_atual_dados = lista_ativa[| 0];
+    // --- [APLICAÇÃO DE CENÁRIO] ---
+    var cenario = dados.cenario;
+    var lay_id = layer_get_id("Background"); // Verifique se o nome na sua Room é esse
+    var back_id = layer_background_get_id(lay_id);
+    
+    if (cenario == "bg_castelo") {
+        layer_background_sprite(back_id, spr_fundo_castelo);
+    } else {
+        layer_background_sprite(back_id, spr_fundo_dojo);
+    }
+
+    // --- [CARREGAMENTO DAS PERGUNTAS] ---
+    // Percorre o Array que veio do JavaScript e alimenta o jogo
+    for (var i = 0; i < array_length(dados.perguntas); i++) {
+        var p_banco = dados.perguntas[i];
+        
+        var estrutura_pergunta = {
+            enunciado: p_banco.enunciado,
+            alternativas: p_banco.alternativas,
+            correta: p_banco.indiceRespostaCorreta // Índice numérico de 0 a 3
+        };
+        
+        ds_list_add(lista_ativa, estrutura_pergunta);
+    }
+
+    // Define a primeira pergunta para começar a partida
+    if (!ds_list_empty(lista_ativa)) {
+        pergunta_atual_dados = lista_ativa[| 0];
+    }
+
+} else {
+    show_debug_message("Aviso: Rodando offline ou fora do Iframe. Carregando dados locais para teste.");
+    // Opcional: crie perguntas fictícias aqui para conseguir testar direto pelo GameMaker
+}

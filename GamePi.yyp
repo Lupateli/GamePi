@@ -38,6 +38,7 @@
   },
   "name":"GamePi",
   "resources":[
+    {"id":{"name":"ExtensaoWeb","path":"extensions/ExtensaoWeb/ExtensaoWeb.yy",},},
     {"id":{"name":"fnt_jogo","path":"fonts/fnt_jogo/fnt_jogo.yy",},},
     {"id":{"name":"obj_botao_cura","path":"objects/obj_botao_cura/obj_botao_cura.yy",},},
     {"id":{"name":"obj_botao_pulo","path":"objects/obj_botao_pulo/obj_botao_pulo.yy",},},
