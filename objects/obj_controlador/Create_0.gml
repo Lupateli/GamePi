@@ -1,4 +1,18 @@
 // --- EVENTO CREATE (CRIAR) DO obj_controlador ---
+// --- INICIALIZAÇÃO DOS STATUS DO COMBATE ---
+vida_maxima_bom = 100;
+vida_bom = 100;
+energia_bom = 0;
+
+vida_maxima_mau = 100;
+vida_mau = 100;
+dano_padrao = 25;
+
+pode_curar = false;
+valor_cura = 20;
+pode_pular = false;
+tremor = 0;
+
 
 // Inicializa a lista de perguntas
 lista_ativa = ds_list_create();

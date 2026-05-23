@@ -7,7 +7,7 @@ draw_set_valign(fa_top); // Importante resetar o alinhamento vertical
 if (variable_instance_exists(id, "pergunta_atual_dados")) {
     var dados = pergunta_atual_dados;
     draw_set_color(c_black);
-    draw_text_ext(room_width/2, 60, dados.enunciado, 25, 700);
+		draw_text_ext(room_width/2, 60, dados.enunciado, 25, 700);
 }
 
 // 3. Verificação de Segurança para as variáveis de vida

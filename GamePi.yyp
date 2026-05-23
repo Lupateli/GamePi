@@ -54,7 +54,7 @@
     {"id":{"name":"spr_botao_pulo_inat","path":"sprites/spr_botao_pulo_inat/spr_botao_pulo_inat.yy",},},
     {"id":{"name":"spr_botao_puloE_1","path":"sprites/spr_botao_puloE_1/spr_botao_puloE_1.yy",},},
     {"id":{"name":"spr_cavaleiro_atack","path":"sprites/spr_cavaleiro_atack/spr_cavaleiro_atack.yy",},},
-    {"id":{"name":"spr_fundo","path":"sprites/spr_fundo/spr_fundo.yy",},},
+    {"id":{"name":"spr_fundo_deserto","path":"sprites/spr_fundo_deserto/spr_fundo_deserto.yy",},},
     {"id":{"name":"spr_morte","path":"sprites/spr_morte/spr_morte.yy",},},
     {"id":{"name":"spr_parado","path":"sprites/spr_parado/spr_parado.yy",},},
     {"id":{"name":"spr_personagem_mau","path":"sprites/spr_personagem_mau/spr_personagem_mau.yy",},},
