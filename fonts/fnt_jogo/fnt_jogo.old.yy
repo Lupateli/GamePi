@@ -1,6 +1,6 @@
 {
   "$GMFont":"",
-  "%Name":"Font1",
+  "%Name":"fnt_jogo",
   "AntiAlias":1,
   "applyKerning":0,
   "ascender":21,
@@ -307,7 +307,7 @@
   "last":0,
   "lineHeight":26,
   "maintainGms1Font":false,
-  "name":"Font1",
+  "name":"fnt_jogo",
   "parent":{
     "name":"Fonts",
     "path":"folders/Fonts.yy",

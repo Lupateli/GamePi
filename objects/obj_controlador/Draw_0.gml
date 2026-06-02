@@ -1,13 +1,16 @@
 // 1. Configurações de Texto
-draw_set_font(fnt_jogo);
+draw_set_font(global.fonte_jogo);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top); // Importante resetar o alinhamento vertical
 
 // 2. Enunciado da Pergunta (Seguro contra erros)
-if (variable_instance_exists(id, "pergunta_atual_dados")) {
+if (!is_undefined(pergunta_atual_dados)) {
     var dados = pergunta_atual_dados;
     draw_set_color(c_black);
-		draw_text_ext(room_width/2, 60, dados.enunciado, 25, 700);
+    draw_text_ext(room_width/2, 60, dados[$ "enunciado"], 25, 700);
+} else {
+    draw_set_color(c_white);
+    draw_text(room_width/2, 60, "Carregando dados da API...");
 }
 
 // 3. Verificação de Segurança para as variáveis de vida
