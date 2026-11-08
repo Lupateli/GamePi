@@ -51,8 +51,11 @@ reiniciar_batalha = function() {
             sprite_index = spr_id;
             image_speed = 1;
             image_index = 0;
+            image_angle = 0;
+            image_alpha = 1;
             x_original = posicao_inicial_x;
             x = posicao_inicial_x;
+            y = posicao_inicial_y;
         }
     }
     if (instance_exists(obj_personagem_mau)) {

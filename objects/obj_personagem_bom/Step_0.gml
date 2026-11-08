@@ -4,6 +4,9 @@ switch(estado) {
     case "idle": 
         sprite_index = spr_id;
         image_speed = 1;
+        image_angle = 0;
+        image_alpha = 1;
+        y = posicao_inicial_y;
         // Sistema de volta suave que você já tem
         if (x_original > posicao_inicial_x) {
             x_original -= 30;
@@ -36,6 +39,10 @@ switch(estado) {
     case "ultimate":
         sprite_index = spr_samuraiUlt;
         // Se a Ult ainda precisar de deslocamento por frame, mantenha a lógica abaixo
+        break;
+
+    case "morte":
+        sprite_index = spr_morte;
         break;
 }
 

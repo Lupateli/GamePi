@@ -9,5 +9,6 @@ spr_ult = spr_samuraiUlt;
 tremor = 0;
 x_original = x;
 posicao_inicial_x = x;
+posicao_inicial_y = y;
 pode_pular = false; // Começa desligado
 pode_curar = false;
