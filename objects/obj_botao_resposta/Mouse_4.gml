@@ -1,3 +1,8 @@
+// Protege contra cliques múltiplos enquanto o herói já estiver atacando
+if (instance_exists(obj_personagem_bom) && obj_personagem_bom.estado != "idle") {
+    exit;
+}
+
 var ctrl = obj_controlador;
 var dados = ctrl.pergunta_atual_dados;
 
@@ -6,13 +11,14 @@ if (!is_undefined(dados)) {
     if (indice == dados[$ "correta"]) {
         // Acertou: Dano no vilão e ganha energia
         ctrl.vida_mau -= ctrl.dano_padrao;
+        if (ctrl.vida_mau < 0) ctrl.vida_mau = 0;
         ctrl.energia_bom += 25;
         
         if (instance_exists(obj_personagem_bom)) {
             with(obj_personagem_bom) {
-                estado = "avanco";      // Muda para o seu novo case
-                image_index = 0;        // Começa a animação do início
-                image_speed = 0;        // Garante a velocidade normal
+                estado = "avanco";
+                image_index = 0;
+                image_speed = 0;
             }
         }
         
@@ -20,58 +26,43 @@ if (!is_undefined(dados)) {
     } else {
         // Errou: Dano no herói
         ctrl.vida_bom -= ctrl.dano_padrao;
+        if (ctrl.vida_bom < 0) ctrl.vida_bom = 0;
         if (instance_exists(obj_personagem_bom)) obj_personagem_bom.tremor = 15;
         
-       if (instance_exists(obj_personagem_mau)) {
-        obj_personagem_mau.estado = "ataque";
-        obj_personagem_mau.sprite_index = spr_cavaleiro_atack;
-        obj_personagem_mau.image_index = 0;
+        if (instance_exists(obj_personagem_mau)) {
+            obj_personagem_mau.estado = "ataque";
+            obj_personagem_mau.sprite_index = spr_cavaleiro_atack;
+            obj_personagem_mau.image_index = 0;
         }
     }
 }
 
-
-// 2. Remove a pergunta atual da lista
+// 2. Remove a pergunta atual da lista ativa
 ds_list_delete(ctrl.lista_ativa, 0);
 
-// ... (Código anterior de processamento de acerto/erro e remoção de pergunta) ...
-
-// 3. Verifica se a lista esvaziou (Fim do Jogo/Turno)
-if (ds_list_empty(ctrl.lista_ativa)) {
-    
-    // FATALITY/DERROTA FINAL
-    if (ctrl.vida_mau > 0) {
-        // O herói falhou. Ativa a animação de morte.
-        if (instance_exists(obj_personagem_bom)) {
-            obj_personagem_bom.estado = "morte"; // MUDANÇA AQUI
-            obj_personagem_bom.image_index = 0;   // Garante que começa no frame 1
-            obj_personagem_bom.image_speed = 0.5; // Velocidade lenta para drama
-            
-            //Toca um efeito sonoro (opcional)
-             audio_play_sound(snd_fatality, 10, false);
-            
-            // Diz ao controlador para ESPERAR a animação acabar antes de reiniciar
-            ctrl.alarm[1] = 120; // 2 segundos (se seu jogo rodar a 60fps)
-        }
-    } else {
-        // VITÓRIA
-        show_message("Vitória! Você derrotou o vilão!");
-        game_restart();
+// 3. Verificação do Fim da Rodada ou Fim da Batalha
+if (ctrl.vida_mau <= 0) {
+    // --- VITÓRIA ---
+    // Avisa a aplicação web (Next.js) que a fase foi concluída com vitória
+    notificar_vitoria_js();
+} else if (ctrl.vida_bom <= 0) {
+    // --- DERROTA ---
+    if (instance_exists(obj_personagem_bom)) {
+        obj_personagem_bom.estado = "morte";
+        obj_personagem_bom.sprite_index = spr_morte;
+        obj_personagem_bom.image_index = 0;
+        obj_personagem_bom.image_speed = 0.5;
     }
+    // Avisa a aplicação web (Next.js) que o jogador foi derrotado
+    notificar_derrota_js();
 } else {
-    // 4. Se a lista ainda tem perguntas, continua normalmente
-    ctrl.pergunta_atual_dados = ctrl.lista_ativa[| 0];
-    
-    // GAME OVER PREMATURO (Vida chegou a 0 no meio)
-    if (ctrl.vida_bom <= 0) {
-        // Mesma lógica de animação de morte
-        if (instance_exists(obj_personagem_bom)) {
-            obj_personagem_bom.estado = "morte"; // MUDANÇA AQUI
-            obj_personagem_bom.image_index = 0;   // Começa no frame 1
-            obj_personagem_bom.image_speed = 1;   // Velocidade normal
-            
-            // O controlador espera a animação acabar
-            ctrl.alarm[1] = 90; // 1.5 segundos
-        }
+    // --- AMBOS AINDA VIVOS ---
+    if (ds_list_empty(ctrl.lista_ativa)) {
+        // As perguntas da fase acabaram mas o combate ainda não terminou:
+        // Recarrega as perguntas para continuar a batalha!
+        ctrl.recarregar_perguntas();
+    } else {
+        // Passa para a próxima pergunta da fila
+        ctrl.pergunta_atual_dados = ctrl.lista_ativa[| 0];
     }
 }

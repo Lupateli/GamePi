@@ -16,7 +16,48 @@ tremor = 0;
 
 // Inicializa a lista de perguntas
 lista_ativa = ds_list_create();
+lista_todas_perguntas = ds_list_create();
 pergunta_atual_dados = undefined;
+
+// Função para recarregar as perguntas quando a lista esvaziar
+recarregar_perguntas = function() {
+    ds_list_clear(lista_ativa);
+    for (var k = 0; k < ds_list_size(lista_todas_perguntas); k++) {
+        ds_list_add(lista_ativa, lista_todas_perguntas[| k]);
+    }
+    ds_list_shuffle(lista_ativa);
+    if (!ds_list_empty(lista_ativa)) {
+        pergunta_atual_dados = lista_ativa[| 0];
+    }
+};
+
+// Função para reiniciar a batalha sem causar tela preta
+reiniciar_batalha = function() {
+    vida_bom = vida_maxima_bom;
+    vida_mau = vida_maxima_mau;
+    energia_bom = 0;
+    pode_curar = false;
+    pode_pular = false;
+    recarregar_perguntas();
+    if (instance_exists(obj_personagem_bom)) {
+        with(obj_personagem_bom) {
+            estado = "idle";
+            sprite_index = spr_id;
+            image_speed = 1;
+            image_index = 0;
+            x_original = posicao_inicial_x;
+            x = posicao_inicial_x;
+        }
+    }
+    if (instance_exists(obj_personagem_mau)) {
+        with(obj_personagem_mau) {
+            estado = "idle";
+            sprite_index = spr_personagem_mau;
+            image_speed = 1;
+            image_index = 0;
+        }
+    }
+};
 
 // Inicializa a fonte global do jogo (Usa o asset fnt_jogo do GameMaker)
 global.fonte_jogo = fnt_jogo;
@@ -100,10 +141,14 @@ if (is_string(json_str) && json_str != "") {
                 };
                 
                 ds_list_add(lista_ativa, estrutura_pergunta);
+                ds_list_add(lista_todas_perguntas, estrutura_pergunta);
             }
         } else {
             show_debug_message("Aviso: 'perguntas' não encontrado no JSON.");
         }
+
+        // Embaralha a ordem inicial das perguntas da fase
+        ds_list_shuffle(lista_ativa);
 
         // Define a primeira pergunta para começar a partida
         if (!ds_list_empty(lista_ativa)) {

@@ -19,6 +19,8 @@
     {"$GMExtensionFile":"v1","%Name":"","constants":[],"copyToTargets":32,"filename":"pontedados.js","final":"","functions":[
         {"$GMExtensionFunction":"","%Name":"obter_dados_fase_js","argCount":0,"args":[],"documentation":"","externalName":"obter_dados_fase_js","help":"obter_dados_fase_js()","hidden":false,"kind":5,"name":"obter_dados_fase_js","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":1,},
         {"$GMExtensionFunction":"","%Name":"jogar_voltar_js","argCount":0,"args":[],"documentation":"","externalName":"jogar_voltar_js","help":"jogar_voltar_js()","hidden":false,"kind":5,"name":"jogar_voltar_js","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
+        {"$GMExtensionFunction":"","%Name":"notificar_vitoria_js","argCount":0,"args":[],"documentation":"","externalName":"notificar_vitoria_js","help":"notificar_vitoria_js()","hidden":false,"kind":5,"name":"notificar_vitoria_js","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
+        {"$GMExtensionFunction":"","%Name":"notificar_derrota_js","argCount":0,"args":[],"documentation":"","externalName":"notificar_derrota_js","help":"notificar_derrota_js()","hidden":false,"kind":5,"name":"notificar_derrota_js","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
       ],"init":"","kind":5,"name":"","origname":"","ProxyFiles":[],"resourceType":"GMExtensionFile","resourceVersion":"2.0","uncompress":false,"usesRunnerInterface":false,},
   ],
   "gradleinject":null,
