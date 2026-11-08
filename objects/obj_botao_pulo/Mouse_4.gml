@@ -4,7 +4,7 @@ if (instance_exists(obj_personagem_bom) && obj_personagem_bom.estado == "idle" &
     var ctrl = obj_controlador;
 
     // "Vence" a questão atual
-    ctrl.vida_mau -= ctrl.dano_padrao;
+    ctrl.vida_mau -= ctrl.dano_no_mau;
     ctrl.energia_bom = 0; 
     
     if (instance_exists(obj_personagem_mau)) obj_personagem_mau.tremor = 20;

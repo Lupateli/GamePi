@@ -10,7 +10,7 @@ var dados = ctrl.pergunta_atual_dados;
 if (!is_undefined(dados)) {
     if (indice == dados[$ "correta"]) {
         // Acertou: Dano no vilão e ganha energia
-        ctrl.vida_mau -= ctrl.dano_padrao;
+        ctrl.vida_mau -= ctrl.dano_no_mau;
         if (ctrl.vida_mau < 0) ctrl.vida_mau = 0;
         ctrl.energia_bom += 25;
         
@@ -25,7 +25,7 @@ if (!is_undefined(dados)) {
         if (instance_exists(obj_personagem_mau)) obj_personagem_mau.tremor = 15;
     } else {
         // Errou: Dano no herói
-        ctrl.vida_bom -= ctrl.dano_padrao;
+        ctrl.vida_bom -= ctrl.dano_no_bom;
         if (ctrl.vida_bom < 0) ctrl.vida_bom = 0;
         if (instance_exists(obj_personagem_bom)) obj_personagem_bom.tremor = 15;
         

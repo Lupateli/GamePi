@@ -6,10 +6,16 @@ energia_bom = 0;
 
 vida_maxima_mau = 100;
 vida_mau = 100;
-dano_padrao = 25;
+
+vidas_bom = 2;
+dano_no_bom = 50;
+
+acertos_boss = 3;
+dano_no_mau = 33.34;
+dano_padrao = dano_no_mau;
 
 pode_curar = false;
-valor_cura = 20;
+valor_cura = dano_no_bom;
 pode_pular = false;
 tremor = 0;
 
@@ -116,7 +122,16 @@ if (is_string(json_str) && json_str != "") {
         var perguntas_array = dados[$ "perguntas"];
         
         if (!is_undefined(perguntas_array) && is_array(perguntas_array)) {
-            for (var i = 0; i < array_length(perguntas_array); i++) {
+            var total_p = array_length(perguntas_array);
+            if (total_p > 0) {
+                vidas_bom = (total_p >= 9) ? 3 : 2;
+                dano_no_bom = 100 / vidas_bom;
+                acertos_boss = max(2, min(total_p, ceil(total_p * 0.75)));
+                dano_no_mau = 100 / acertos_boss;
+                dano_padrao = dano_no_mau;
+                valor_cura = dano_no_bom;
+            }
+            for (var i = 0; i < total_p; i++) {
                 var p_banco = perguntas_array[i];
                 var alt_array = p_banco[$ "alternativas"];
                 var res_correta = p_banco[$ "respostaCorreta"];
